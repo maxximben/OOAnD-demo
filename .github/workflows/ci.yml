@@ -1,15 +1,15 @@
 name: CI (PR only)
 
 on:
-  pull_request:          # ← только на PR, как вы просили
-    branches: [ main, master ]   # укажите свои основные ветки
+  pull_request:        
+    branches: [ main, master ]   
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest     # дешевле и быстрее Windows
+    runs-on: ubuntu-latest     
     permissions:
       contents: read
-      pull-requests: write     # обязательно для комментария в PR
+      pull-requests: write    
 
     steps:
       - name: Checkout code
@@ -18,9 +18,8 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'   # или '9.0.x' — подставьте свою версию
+          dotnet-version: '10.0.x'
 
-      # Кэширование NuGet — сильно экономит минуты на restore
       - name: Cache NuGet packages
         uses: actions/cache@v4
         with:
@@ -32,11 +31,9 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      # Собираем проект ОДИН РАЗ
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      # Тесты без повторной сборки + сбор покрытия
       - name: Test with coverage
         run: |
           dotnet test \
@@ -46,20 +43,18 @@ jobs:
             --results-directory ./coverage \
             --verbosity normal
 
-      # Генерируем красивый отчёт о покрытии (Markdown + badge)
       - name: Code Coverage Summary
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: 'coverage/**/coverage.cobertura.xml'   # находит все тестовые проекты
+          filename: 'coverage/**/coverage.cobertura.xml'  
           badge: true
           format: 'markdown'
-          output: 'both'               # создаст code-coverage-results.md
-          thresholds: '70 85'          # предупредит, если ниже 70%/85% (можно изменить)
+          output: 'both'               
+          thresholds: '70 90'          
 
-      # Публикуем отчёт в комментарий к PR (обновляет один и тот же комментарий)
       - name: Add Coverage Comment to PR
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           recreate: true
           path: code-coverage-results.md
-          header: code-coverage   # чтобы можно было иметь несколько разных sticky-комментариев
+          header: code-coverage   
