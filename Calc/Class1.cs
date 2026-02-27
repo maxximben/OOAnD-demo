@@ -1,11 +1,4 @@
-﻿namespace OOAnD;
-
-class Program
-{
-    static void Main(string[] args)
-    {
-    }
-}
+﻿namespace Calc;
 
 public class Calculator
 {

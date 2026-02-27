@@ -1,4 +1,4 @@
-﻿using OOAnD;
+﻿using Calc;
 using FluentAssertions;
 
 namespace tests;
@@ -14,5 +14,16 @@ public class CalculatorTests
         int result = Calculator.Add(a, b);
         
         result.Should().Be(12);
+    }
+
+    [Fact]
+    public void MultiplyTwoNumbersReturnsCorrectResult()
+    {
+        int a = 6;
+        int b = 7;
+
+        int result = Calculator.Multiply(a, b);
+
+        Assert.Equal(42, result);
     }
 }
