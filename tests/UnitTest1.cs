@@ -1,4 +1,4 @@
-﻿using OOAnD;
+﻿using Calc;
 using FluentAssertions;
 
 namespace tests;
