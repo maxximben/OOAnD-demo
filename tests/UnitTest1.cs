@@ -15,4 +15,15 @@ public class CalculatorTests
         
         result.Should().Be(12);
     }
+
+    [Fact]
+    public void MultiplyTwoNumbersReturnsCorrectResult()
+    {
+        int a = 6;
+        int b = 7;
+
+        int result = Calculator.Multiply(a, b);
+
+        Assert.Equal(42, result);
+    }
 }
