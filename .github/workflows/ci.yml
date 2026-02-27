@@ -18,7 +18,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'   # или '9.0.x' — подставьте свою версию
+          dotnet-version: '10.0.x'   # или '9.0.x' — подставьте свою версию
 
       # Кэширование NuGet — сильно экономит минуты на restore
       - name: Cache NuGet packages
